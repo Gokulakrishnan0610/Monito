@@ -1,5 +1,10 @@
 import React from 'react'
 import navData from '../../data/nav'
+import facebook from "../../img/footer/Facebook.png"
+import instagram from "../../img/footer/Instagram.png"
+import twitter from "../../img/footer/Twitter.png"
+import youtube from "../../img/footer/Youtube.png"
+
 
 const Footer = () => {
     return (
@@ -19,10 +24,11 @@ const Footer = () => {
                     <li>about</li>
                     <li>contact</li>
                 </ul>
-                <div className="icon-group flex gap-2 " >
-                    <p>q</p>
-                    <p>q</p>
-                    <p>q</p>
+                <div className="icon-group flex gap-12 " >
+                    <img src={facebook} alt="facebook" />
+                    <img src={twitter} alt="facebook" />
+                    <img src={instagram} alt="facebook" />
+                    <img src={youtube} alt="facebook" />
                 </div>
 
             </div>

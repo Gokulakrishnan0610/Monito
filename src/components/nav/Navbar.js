@@ -1,6 +1,6 @@
 import React from 'react'
 import navData from '../../data/nav'
-
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     return (
@@ -10,14 +10,16 @@ const Navbar = () => {
             </div>
 
             <img src={navData.logoImage} alt="" />
-            <ul className=' items-center justify-between gap-5 font-medium hidden md:flex '>
+            <ul className='items-center justify-between gap-5 font-medium hidden md:flex'>
                 {
                     navData.navigator.map((data, index) => (
-                        <li className='capitalize' key={index}>{data}</li>
-
+                        <li className='capitalize' key={index}>
+                            <Link to={data.path}>{data.label}</Link>
+                        </li>
                     ))
                 }
             </ul>
+
             <div className="search flex  gap-3 items-center ">
                 {navData.searchIcon}
                 <input type="text" placeholder='Search something here!' className='focus:outline-none border-none px-2 hidden md:flex' />

@@ -2,24 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-<<<<<<< HEAD
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Context from './service/ServiceProvider';
-=======
->>>>>>> a065978cd4832a22adbc4dcad496f1a18f9cbf71
-
+import Category from "./Category"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-<<<<<<< HEAD
   <Context>
     <BrowserRouter>
-      <App />
+      <Routes>
+        <Route path="/" element={<App/>} />
+        <Route path="/category" element={<Category/>}/>
+      </Routes>
     </BrowserRouter>
   </Context>
-
-=======
-  <App />
->>>>>>> a065978cd4832a22adbc4dcad496f1a18f9cbf71
 );
 

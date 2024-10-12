@@ -11,7 +11,7 @@ const PetsCollections = () => {
             <div className="collections-box1-1 flex justify-between capitalize items-center  px-[10px]  ">
                 <h3 className='font-medium text-[#003459] '>take a look at some out of pets</h3>
                 <button className='px-3 py-1  border-[2px] hover:bg-[#003459] hover:text-white rounded-2xl  border-[#003459] text-[#003459] '>
-                view more >
+                view more 
                 </button>
             </div>
             <div className="pets-collections grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2  ">

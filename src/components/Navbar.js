@@ -6,8 +6,8 @@ import vector from "../images/Vector.png"
 import bsearch from "../images/BlackSearch.png"
 import mrectangel from "../images/MRectangle.png"
 import arrow from "../images/Arrow.png"
+import { Link } from 'react-router-dom';
 
-// hidden md:flex
 
 const Navbar = () => {
     return (
@@ -21,7 +21,7 @@ const Navbar = () => {
                     <img src={vector} alt="" className="w-4 h-4 absolute top-[65px] left-3 z-10 sm:hidden"   />
                     <img src={bsearch} alt="" className="w-4 h-4 z-10 absolute top-[65px] right-3 sm:hidden" />
                     <div className="flex flex-row gap-5 xl:gap-12 text-[#003459] text-base font-bold font-gilroy mt-3 hidden sm:flex sm:absolute sm:left-[200px] xl:left-0">
-                        <p>Home</p>
+                        <p><Link to="/">Homee</Link></p>
                         <p>Category</p>
                         <p>About</p>
                         <p>Contact</p>

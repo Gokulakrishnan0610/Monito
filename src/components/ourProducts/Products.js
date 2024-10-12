@@ -9,7 +9,7 @@ const Products = () => {
             <div className="box  flex justify-between text-[#003459] items-center capitalize">
                 <h3 className='font-medium'>our products</h3>
                 <button className='border-[#003459] border-[1px] rounded-2xl px-2 py-1 '>
-                view more >
+                view more
                 </button>
             </div>
             <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2  ">

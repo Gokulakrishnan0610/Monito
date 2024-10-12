@@ -1,4 +1,3 @@
-import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/nav/Navbar";
 import PetsCollections from "./components/petsCollections/PetsCollections";
 import Banner from "./components/banner/Banner";
@@ -12,19 +11,20 @@ import Footer from "./components/footer/Footer";
 function App() {
 
   return (
-    <div className="App overflow-y-scroll   ">
-      <Navbar />
-      <Banner />
-      <PetsCollections />
-      <FriendBanner/>
-      <Products/>
-      <Sellers/>
-      <AdaptBanner/>
-      <PetAbout/>
-      <Footer/>
- 
-     
-    </div>
+      <div className="App overflow-y-scroll   ">
+
+          <Navbar />
+          <Banner />
+          <PetsCollections />
+          <FriendBanner />
+          <Products />
+          <Sellers />
+          <AdaptBanner />
+          <PetAbout />
+          <Footer />
+  
+      </div>
+   
   );
 }
 

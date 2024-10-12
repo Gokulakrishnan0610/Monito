@@ -1,8 +1,8 @@
 import React from 'react'
-import './Banner.css'
-import banner from '../../data/banner'
 
-const Banner = () => {
+import grouppuppies from '../../img/category/group-puppies.png'
+
+const CategoryBanner = () => {
     return (
         <div className='Banner flex justify-between bg-red-500 flex-col md:flex-row   '>
             <div className="banner-box-1 w-full text-[#002A48]  flex flex-col items-center justify-center">
@@ -22,10 +22,10 @@ const Banner = () => {
                 </div>
             </div>
             <div className="banner-box-2 w-full h-full  ">
-                <img src={banner.dog} alt="" color='w-full h-full' />
+                <img src={grouppuppies} alt="" color='w-full h-full' />
             </div>
         </div>
     )
 }
 
-export default Banner
+export default CategoryBanner
