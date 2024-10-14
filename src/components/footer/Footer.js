@@ -10,10 +10,10 @@ const Footer = () => {
     return (
         <footer className='footer bg-[#fdecce] px-[10px] md:px-[60px] py-[30px] md:py-[50px]    '>
             <div className="footer-box p-[20px] bg-[#003459] rounded-2xl flex flex-col md:flex-row gap-2 items-center  ">
-                <p className='fonr-bold text-white w-fit capitalize '>register now do you dont don't miss our program </p>
+                <p className='fonr-bold text-white w-fit capitalize '>Register Now So You Don't Miss Our Program </p>
                 <div className="input p-[20px] bg-white w-full rounded-2xl flex gap-2 flex-col md:flex-row   ">
                     <input type="text" className='border-gray-500 focus:outline-none border-[1px] w-full rounded-lg  py-2 px-2 ' placeholder='Enter your Email' />
-                    <button className='bg-[#003459] md:w-[200px] rounded-lg py-2  text-white capitalize '>subcribe now </button>
+                    <button className='bg-[#003459] md:w-[200px] rounded-lg py-2  text-white capitalize '>Subcribe Now </button>
                 </div>
 
             </div>
