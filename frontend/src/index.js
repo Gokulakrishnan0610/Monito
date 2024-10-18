@@ -11,6 +11,11 @@ import AdminDetails from './components/admin/AdminDetails';
 import UserDetails from './components/admin/UserDetails'
 import Products from './components/admin/Products';
 import AddProducts from "./components/admin/AddProducts"
+import Signup from './components/auth/Signup';
+import Login from './components/auth/Login';
+import ResetPass from './components/auth/ResetPass';
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +23,9 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/signup" element={<Signup/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/resetpassword" element={<ResetPass/>} />
         <Route path="/category" element={<Category />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/admin" element={<Admin />} />
