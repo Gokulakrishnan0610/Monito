@@ -1,51 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-import { useService } from '../../service/ServiceProvider';
+import { onAuthStateChanged, sendPasswordResetEmail } from "firebase/auth";
 import './ResetPass.css';
+import auth from '../../firebase/firebase';
+import { useService } from '../../service/ServiceProvider';
 const ResetPass = () => {
-
-    const { passwordReset } = useService();
+    // const { onResetPassword } = useService;
+    
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [gmail, setGmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [conformPassword, setConformPassword] = useState("");
-
     const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [conformPasswordError, setConformPasswordError] = useState("");
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-    const onResetPassword = async () => {
-        if (gmail === "") setEmailError("Required");
-        if (password === "") setPasswordError("Required");
-        if (password === "") setPasswordError("Required");
-        if (conformPassword === "") setConformPasswordError("Required");
-        if (password.length < 6) return setPasswordError("Password must be at least 6 characters long");
-        if (password !== conformPassword) return setConformPasswordError("Passwords do not match");
-        if (gmail === "" || password === "" || conformPassword === "") return;
-
+    const onResetPassword = async (e) => {
+        e.preventDefault()
+        if (gmail === "")  return setEmailError("Required");
         setLoading(true);
-        const res = await passwordReset({ gmail, password });
-        setLoading(false);
+        sendPasswordResetEmail(auth, gmail)
+            .then(() => {
+                alert("passwoer reset link sent to email check it")
+                navigate('/login');
+                setGmail("");
+               
+            })
+            .catch((error) => {
+                alert("Error sending password reset email:")
+                console.error("Error sending password reset email:", error);
+            });
+        };
 
-        if (res.success) {
-            navigate('/login');
-            setGmail("");
-            setPassword("");
-            setConformPassword("");
-        } else {
-            if (res.for === "gmail") setEmailError(res.message);
+  
+
+    useEffect(() => {
+        function authathicata (){
+            navigate("/")
+                alert("login true")
+           
         }
-    };
+        onAuthStateChanged(auth,authathicata)
+    }, [])
 
-    const togglePasswordVisibility = () => setShowPassword(!showPassword);
-    const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
+
 
     return (
         <div className="reset flex flex-col items-center justify-center w-full sm:px-8  min-h-screen bg-transparent  text-white ">
@@ -68,53 +65,7 @@ const ResetPass = () => {
                     />
                 </div>
 
-                <div className="flex flex-col gap-1">
-                    <div className="flex justify-between items-center">
-                        <label htmlFor="password" className="font-semibold">Password</label>
-                        <p className="text-red-500 text-xs">{passwordError}</p>
-                    </div>
-                    <div className="relative">
-                        <input
-                            type={showPassword ? 'text' : 'password'}
-                            id="password"
-                            placeholder="Enter Your Password"
-                            className="focus:outline-none py-2 px-3 rounded border border-gray-300 w-full"
-                            value={password}
-                            onChange={(e) => { setPassword(e.target.value); setPasswordError(""); }}
-                        />
-                        <button
-                            type="button"
-                            className="absolute right-3 top-[10px] flex justify-center items-center text-gray-600"
-                            onClick={togglePasswordVisibility}
-                        >
-                            {showPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
-                        </button>
-                    </div>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                    <div className="flex justify-between items-center">
-                        <label htmlFor="confirm-password" className="font-semibold">Confirm Password</label>
-                        <p className="text-red-500 text-xs">{conformPasswordError}</p>
-                    </div>
-                    <div className="relative">
-                        <input
-                            type={showConfirmPassword ? 'text' : 'password'}
-                            id="confirm-password"
-                            placeholder="Confirm Your Password"
-                            className="focus:outline-none py-2 px-3 rounded border border-gray-300 w-full"
-                            value={conformPassword}
-                            onChange={(e) => { setConformPassword(e.target.value); setConformPasswordError(""); }}
-                        />
-                        <button
-                            type="button"
-                            className="absolute right-3 top-[10px] flex justify-center items-center text-gray-600"
-                            onClick={toggleConfirmPasswordVisibility}
-                        >
-                            {showConfirmPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
-                        </button>
-                    </div>
-                </div>
+              
 
                 <button
                     className="py-2 mt-4 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 transition-all"

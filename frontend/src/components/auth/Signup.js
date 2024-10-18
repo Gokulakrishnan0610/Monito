@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Link, useNavigate } from 'react-router-dom';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'; // Importing the eye icons
+import {  Link, useNavigate } from 'react-router-dom';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'; 
 import { useService } from '../../service/ServiceProvider';
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import './Signup.css'
+import auth from '../../firebase/firebase';
 const Signup = () => {
 
-    const { signUp } = useService;
+    const { } = useService;
     const navigate = useNavigate();
-
+   
     // Signup details
     const [userName, setUserName] = useState("");
     const [gmail, setGmail] = useState("");
@@ -19,9 +21,20 @@ const Signup = () => {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [signUpError, setSignUpError] = useState("");
-
     // Password visibility toggle
     const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
+    
+    useEffect(() => {
+        
+
+        function authathicata (){
+            navigate("/")
+                alert("login true")
+           
+        }
+        onAuthStateChanged(auth,authathicata)
+    }, [])
+
 
     const onSignUp = async (e) => {
         e.preventDefault()
@@ -44,21 +57,31 @@ const Signup = () => {
         if (userName === "" || gmail === "" || password === "") {
             return;
         } else {
+
             setLoading(true);
-            const res = await signUp({ userName, gmail, password });
-            console.log(res);
-            if (res.success) {
-                navigate('/login');
-                setGmail("");
-                setUserName("");
-                setPassword("");
-                setLoading(false);
-            } else {
-                setEmailError(res.message);
-                setLoading(false);
-            }
+            createUserWithEmailAndPassword(auth, gmail, password)
+                .then((userCredential) => {
+                    console.log(userCredential.user.email)
+                    navigate('/login');
+                    setGmail("");
+                    setUserName("");
+                    setPassword("");
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    setEmailError(error.message);
+                    setLoading(false);
+                });
+
         }
+
+
     };
+
+
+
+
+
 
     // Toggle password visibility
     const togglePasswordVisibility = () => {

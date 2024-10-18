@@ -1,11 +1,12 @@
-
-
-
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useService } from '../../service/ServiceProvider';
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import auth from '../../firebase/firebase';
+// import { getAuth } from "firebase/auth";
 import './Login.css'
+
 const Login = () => {
     const { logIn, setLogin } = useService;
     const navigate = useNavigate();
@@ -15,7 +16,18 @@ const Login = () => {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [logInError, setLogInError] = useState("");
-    const [showPassword, setShowPassword] = useState(false); // New state for password visibility
+    const [showPassword, setShowPassword] = useState(false);
+
+    useEffect(() => {
+        
+
+        function authathicata (){
+            navigate("/")
+                alert("login true")
+           
+        }
+        onAuthStateChanged(auth,authathicata)
+    }, [])
 
     const onSignIn = async (e) => {
         e.preventDefault()
@@ -24,30 +36,26 @@ const Login = () => {
         if (password === "") setPasswordError("Required");
 
         if (gmail === "" || password === "") {
-            setLoading(false);
             return;
         }
 
-        const res = await logIn({ gmail, password });
-        setLoading(false);
+        signInWithEmailAndPassword(auth, gmail, password)
+            .then((userCredential) => {
+                console.log(userCredential.user.email)
+                setLoading(false);
+                navigate('/');
+                setGmail("");
+                setPassword("");
+            })
+            .catch((error) => {
+                setLoading(false);
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
 
-        if (res.success === true) {
-            const status = JSON.parse(localStorage.getItem("wallMat"));
-            status.gmail = gmail;
-            status.login = true;
-            localStorage.setItem("wallMat", JSON.stringify(status));
-            setLogin(true);
-            navigate('/');
-            setGmail("");
-            setPassword("");
-        } else {
-            if (res.for === "gmail") {
-                setEmailError(res.message);
-            } else if (res.for === "password") {
-                setPasswordError(res.message);
-            }
-            setLogInError(res.message);
-        }
+
+
+
     };
 
     // Function to toggle password visibility
