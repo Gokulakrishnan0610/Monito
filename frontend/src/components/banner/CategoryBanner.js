@@ -22,7 +22,7 @@ const CategoryBanner = () => {
                 </div>
             </div>
             <div className="banner-box-2 w-full h-full  ">
-                <img src={grouppuppies} alt="" color='w-full h-full' />
+                <img src={grouppuppies} alt="" className='w-full h-full md:mt-[160px] xl:mt-0' />
             </div>
         </div>
     )

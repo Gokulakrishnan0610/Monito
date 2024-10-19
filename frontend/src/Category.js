@@ -1,5 +1,5 @@
 import Navbar from "./components/nav/Navbar";
-import PetsCollections from "./components/petsCollections/PetsCollections";
+import CategoryPetsCollections from "./components/category/CategoryPetsCollections"
 import Footer from "./components/footer/Footer";
 import CategoryBanner from "./components/banner/CategoryBanner";
 
@@ -9,7 +9,7 @@ function Category() {
         <div className="App overflow-y-auto   ">
             <Navbar />
             <CategoryBanner />
-            <PetsCollections />
+            <CategoryPetsCollections />
             <Footer />
         </div>
     );
