@@ -21,8 +21,8 @@ const Banner = () => {
                     </div>
                 </div>
             </div>
-            <div className="banner-box-2 w-full h-full  ">
-                <img src={banner.dog} alt="" color='w-full h-full' />
+            <div className="banner-box-2 w-full h-full">
+                <img src={banner.dog} alt="" className='w-full h-full md:mt-[52px] xl:mt-0' />
             </div>
         </div>
     )

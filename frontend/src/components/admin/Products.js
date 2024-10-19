@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import "./Products.css";
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -31,7 +32,7 @@ const Products = () => {
     }
 
     return (
-        <div>
+        <div className="h-screen overflow-y-auto p-4 no-scrollbar">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {products.map((product) => (
                     <div key={product._id} className="border p-4 rounded">
@@ -59,17 +60,3 @@ const Products = () => {
 export default Products;
 
 
-{/* <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {products.map((product) => (
-                    <div key={product._id} className="border p-4 rounded">
-                        <img src={product.image} alt={product.name} className="w-full h-64 object-cover mb-4 rounded" />
-                        <h3 className="text-lg font-semibold">{product.name}</h3>
-                        <p>SKU: {product.SKU}</p>
-                        <p>Gender: {product.gender}</p>
-                        <p>Age: {product.age}</p>
-                        <p>Rs. {product.price}</p>
-                    </div>
-                ))}
-            </div>
-        </div> */}

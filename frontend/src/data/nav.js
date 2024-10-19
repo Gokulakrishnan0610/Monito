@@ -7,6 +7,7 @@ const navData = {
         { label: 'home', path: '/' },
         { label: 'category', path: '/category' },
         { label: 'contact', path: '/contact' },
+        // { label: 'login', path: '/login' },
         { label: 'admin', path: '/admin' },
     ],
     searchIcon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
