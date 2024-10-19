@@ -4,11 +4,10 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useService } from '../../service/ServiceProvider';
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import auth from '../../firebase/firebase';
-// import { getAuth } from "firebase/auth";
 import './Login.css'
 
 const Login = () => {
-    const { logIn, setLogin } = useService;
+
     const navigate = useNavigate();
     const [gmail, setGmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,46 +18,77 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
-        
 
-        function authathicata (){
-            navigate("/")
-                alert("login true")
-           
+
+        function authathicata(user) {
+
+            if (user) {
+                navigate("/")
+
+            } else {
+
+            }
+
         }
-        onAuthStateChanged(auth,authathicata)
+        onAuthStateChanged(auth, authathicata)
     }, [])
 
+   
+  
     const onSignIn = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         setLoading(true);
-        if (gmail === "") setEmailError("Required");
-        if (password === "") setPasswordError("Required");
-
-        if (gmail === "" || password === "") {
-            return;
+        setLogInError("");
+        setEmailError("");
+        setPasswordError("");
+      
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+        if (!emailRegex.test(gmail)) {
+          setEmailError("Enter a valid email address.");
+          setLoading(false);
+          return;
         }
-
-        signInWithEmailAndPassword(auth, gmail, password)
-            .then((userCredential) => {
-                console.log(userCredential.user.email)
-                setLoading(false);
-                navigate('/');
-                setGmail("");
-                setPassword("");
-            })
-            .catch((error) => {
-                setLoading(false);
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            });
-
-
-
-
-    };
-
-    // Function to toggle password visibility
+      
+        if (password.length === 0) {
+          setPasswordError("Password is required.");
+          setLoading(false);
+          return;
+        }
+      
+        
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, gmail, password);
+          console.log(userCredential.user.email); // Handle successful login
+          setLoading(false);
+          navigate('/');
+          setGmail("");
+          setPassword("");
+        } catch (error) {
+          setLoading(false);
+          console.log(error.code)
+      
+         
+          switch (error.code) {
+            case 'auth/wrong-password':
+              setPasswordError("Incorrect password. Please try again.");
+              break;
+            case 'auth/user-not-found':
+              setEmailError("No account found with this email address.");
+              break;
+            case 'auth/invalid-email':
+              setEmailError("Please enter a valid email address.");
+              break;
+            case 'auth/network-request-failed': 
+              setLogInError("Network error. Please check your connection and try again.");
+              break;
+            case 'auth/invalid-credential': 
+              setPasswordError("incorrect password");
+              break;
+            default:
+              setLogInError("Please try again."); 
+          }
+        }
+      };
     const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
     return (

@@ -6,7 +6,7 @@ import CategoryBanner from "./components/banner/CategoryBanner";
 function Category() {
 
     return (
-        <div className="App overflow-y-scroll   ">
+        <div className="App overflow-y-auto   ">
             <Navbar />
             <CategoryBanner />
             <PetsCollections />

@@ -12,7 +12,6 @@ function App() {
 
   return (
       <div className="App overflow-y-scroll   ">
-
           <Navbar />
           <Banner />
           <PetsCollections />
@@ -22,9 +21,7 @@ function App() {
           <AdaptBanner />
           <PetAbout />
           <Footer />
-  
       </div>
-   
   );
 }
 

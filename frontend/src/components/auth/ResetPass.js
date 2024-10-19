@@ -34,12 +34,17 @@ const ResetPass = () => {
   
 
     useEffect(() => {
-        function authathicata (){
-            navigate("/")
-                alert("login true")
-           
+        function authathicata(user) {
+
+            if (user) {
+                navigate("/")
+
+            } else {
+
+            }
+
         }
-        onAuthStateChanged(auth,authathicata)
+        onAuthStateChanged(auth, authathicata)
     }, [])
 
 

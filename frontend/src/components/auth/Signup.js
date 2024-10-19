@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import {  Link, useNavigate } from 'react-router-dom';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'; 
+import { Link, useNavigate } from 'react-router-dom';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useService } from '../../service/ServiceProvider';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import './Signup.css'
 import auth from '../../firebase/firebase';
 const Signup = () => {
 
+
     const { } = useService;
     const navigate = useNavigate();
-   
+
     // Signup details
     const [userName, setUserName] = useState("");
     const [gmail, setGmail] = useState("");
@@ -21,69 +22,84 @@ const Signup = () => {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [signUpError, setSignUpError] = useState("");
-    // Password visibility toggle
-    const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
-    
-    useEffect(() => {
-        
-
-        function authathicata (){
-            navigate("/")
-                alert("login true")
-           
-        }
-        onAuthStateChanged(auth,authathicata)
-    }, [])
+    const [showPassword, setShowPassword] = useState(false);
 
 
     const onSignUp = async (e) => {
-        e.preventDefault()
-        if (userName === "") {
-            setUserNameError("Required");
+        e.preventDefault();
+        setUserNameError("");
+        setEmailError("");
+        setPasswordError("");
+        if (!userName) {
+          setUserNameError("Username is required.");
+          return;
         } else if (userName.length < 6) {
-            setUserNameError("Username at least 6 characters long");
+          setUserNameError("Username must be at least 6 characters long.");
+          return;
         }
-
-        if (gmail === "") {
-            setEmailError("Required");
+      
+        if (!gmail) {
+          setEmailError("Email address is required.");
+          return;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gmail)) {
+          setEmailError("Please enter a valid email address.");
+          return;
         }
-
-        if (password === "") {
-            setPasswordError("Required");
+      
+        if (!password) {
+          setPasswordError("Password is required.");
+          return;
         } else if (password.length < 6) {
-            return setPasswordError("Password at least 6 characters long");
+          setPasswordError("Password must be at least 6 characters long.");
+          return;
         }
-
-        if (userName === "" || gmail === "" || password === "") {
-            return;
-        } else {
-
-            setLoading(true);
-            createUserWithEmailAndPassword(auth, gmail, password)
-                .then((userCredential) => {
-                    console.log(userCredential.user.email)
-                    navigate('/login');
-                    setGmail("");
-                    setUserName("");
-                    setPassword("");
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    setEmailError(error.message);
-                    setLoading(false);
-                });
-
+        try {
+          setLoading(true); 
+      
+          const userCredential = await createUserWithEmailAndPassword(auth, gmail, password);
+          console.log(userCredential.user.email); 
+      
+          setLoading(false);
+          navigate('/login');
+      
+          setGmail("");
+          setUserName("");
+          setPassword("");
+        } catch (error) {
+          setLoading(false);
+    
+          switch (error.code) {
+            case 'auth/email-already-in-use':
+              setEmailError("Email address already in use");
+              break;
+            case 'auth/weak-password':
+              setPasswordError("Password is too weak. ");
+              break;
+            case 'auth/network-request-failed': 
+              setUserNameError("Network error.");
+              break;
+            default:
+              setUserNameError("Please try again."); 
+          }
         }
+      };
+
+    useEffect(() => {
+        function authathicata(user) {
+            if (user) {
+                navigate("/")
+            } else {
+            }
+        }
+        onAuthStateChanged(auth, authathicata)
+    }, [])
+
+   
 
 
-    };
 
 
 
-
-
-
-    // Toggle password visibility
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
