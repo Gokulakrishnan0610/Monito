@@ -28,7 +28,6 @@ app.get('/products', async (req, res) => {
 app.post('/products', async (req, res) => {
     try {
         const newProduct = new Product(req.body);
-        console.log(req.body.image.length)
         const savedProduct = await newProduct.save();
         res.status(201).json(savedProduct);
     } catch (error) {

@@ -9,17 +9,18 @@ const CategoryPetsCollections = () => {
     useEffect(() => {
         axios.get('http://localhost:5000/products')
             .then((response) => {
-                setProducts(response.data); // set the fetched products
-                setLoading(false); // set loading to false after data is fetched
+                setProducts(response.data);
+            
+                setLoading(false); 
             })
             .catch((error) => {
                 console.log(error);
-                setLoading(false); // stop loading in case of error
+                setLoading(false); 
             });
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>; // Show loading message while fetching data
+        return <div>Loading...</div> 
     }
 
     return (

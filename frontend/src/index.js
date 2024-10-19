@@ -14,6 +14,7 @@ import AddProducts from "./components/admin/AddProducts"
 import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
 import ResetPass from './components/auth/ResetPass';
+import AddAnimals from './components/admin/AddAnimals';
 
 
 
@@ -33,6 +34,7 @@ root.render(
         <Route path="/UserDetails" element={<UserDetails />} />
         <Route path="/Products" element={<Products />} />
         <Route path="/AddProducts" element={<AddProducts />} />
+        <Route path="/addanimals" element={<AddAnimals/>} />
       </Routes>
     </BrowserRouter>
   </Context>
