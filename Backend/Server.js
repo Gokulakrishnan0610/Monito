@@ -3,23 +3,16 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const Product = require('./models/Product'); // Product model
-
+const dbConnection=require("./config/db")
 const app = express();
 const PORT = 5000;
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
+dbConnection()
 
-// MongoDB connection (replace with your MongoDB Atlas connection string)
-mongoose.connect('mongodb://localhost:27017/Monito', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('MongoDB connected'))
-    .catch((error) => console.error('MongoDB connection error:', error));
 
-// Routes
 
 // Get all products
 app.get('/products', async (req, res) => {
@@ -35,6 +28,7 @@ app.get('/products', async (req, res) => {
 app.post('/products', async (req, res) => {
     try {
         const newProduct = new Product(req.body);
+        console.log(req.body.image.length)
         const savedProduct = await newProduct.save();
         res.status(201).json(savedProduct);
     } catch (error) {
