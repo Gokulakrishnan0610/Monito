@@ -10,7 +10,6 @@ const CategoryPetsCollections = () => {
         axios.get('http://localhost:5000/products')
             .then((response) => {
                 setProducts(response.data);
-            
                 setLoading(false); 
             })
             .catch((error) => {
@@ -36,13 +35,13 @@ const CategoryPetsCollections = () => {
                 {
                     products.map((pro, index) => (
                         <div key={index} className="product rounded-lg p-3">
-                            <img src={pro.image} alt={pro.name} className='rounded-lg mb-2' />
+                            <img src={pro.image[0]} alt={pro.name} className='rounded-lg mb-2 w-full h-[250px]' />
                             <div className='flex items-center gap-2'>
                                 <h5 className='text-base font-medium'>{pro.SKU} - {pro.name}</h5>
                             </div>
                             <div className="details flex gap-4">
                                 <small>Gene:  {pro.gender}</small>
-                                <small>Age:  {pro.age}</small>
+                                <small>Age:  {pro.age} {pro.ageUnit}</small>
                             </div>
                             <div className="price mt-1 text-base font-medium">
                                 ₹ {pro.price}

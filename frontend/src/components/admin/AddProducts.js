@@ -127,7 +127,7 @@ const AddProducts = () => {
     };
 
     return (
-        <div className="overflow-scroll min-h-screen w-screen py-6 bg-gray-100 ">
+        <div className="overflow-scroll min-h-screen w-screen py-6 bg-gray-100 scroll-container">
             <form onSubmit={handleSubmit} className=" m-auto w-[90%] md:max-w-[50%]  overflow-auto bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-xl font-bold mb-4">Add Product</h2>
 
