@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "../admin/AddProducts.css"
+// import "./AddPetsProducts.css"
 import { FaTrash } from 'react-icons/fa';
-import './AddAnimals.css'
-const AddAnimals = () => {
+import './AddPets.css'
+const AddPets = () => {
     const [products, setProducts] = useState([]);
     const [form, setForm] = useState({
         SKU: '',
@@ -491,5 +491,5 @@ const AddAnimals = () => {
     );
 };
 
-export default AddAnimals;
+export default AddPets;
 

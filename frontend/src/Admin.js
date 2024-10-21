@@ -12,13 +12,16 @@ function Admin() {
         navigate('/UserDetails');
     };
     const handleClickProduct = () => {
-        navigate('/Products');
+        navigate('/PetsDetails');
     };
     const handleClickAdd = () => {
-        navigate('/AddProducts');
+        navigate('/AddPetsProducts');
     };
-    const handleAddAnimals = () => {
-        navigate('/addanimals');
+    const handleClickAddAnimals = () => {
+        navigate('/AddPets');
+    };
+    const handleClickProductDetails = () => {
+        navigate('/ProductDetails');
     };
     return (
         <div className="container mx-auto px-4 py-8">
@@ -39,22 +42,28 @@ function Admin() {
                 </div>
 
                 <div className="bg-[#F7DBA7] text-left text-2xl h-fit flex flex-row items-center relative p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-                    <h1>Product Details</h1>
+                    <h1>Pets Details</h1>
                     <button className="ml-auto">
                         <SlArrowRight onClick={handleClickProduct} className="text-3xl hover:text-gray-700 transition-colors duration-300" />
                     </button>
                 </div>
 
                 <div className="bg-[#F7DBA7] text-left text-2xl h-fit flex flex-row items-center relative p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-                    <h1>Add Animals</h1>
+                    <h1>Add Pets</h1>
                     <button className="ml-auto">
-                        <SlArrowRight onClick={handleAddAnimals} className="text-3xl hover:text-gray-700 transition-colors duration-300" />
+                        <SlArrowRight onClick={handleClickAddAnimals} className="text-3xl hover:text-gray-700 transition-colors duration-300" />
                     </button>
                 </div>
                 <div className="bg-[#F7DBA7] text-left text-2xl h-fit flex flex-row items-center relative p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-                    <h1>Add Animal Product</h1>
+                    <h1>Add Pets Product</h1>
                     <button className="ml-auto">
                         <SlArrowRight onClick={ handleClickAdd } className="text-3xl hover:text-gray-700 transition-colors duration-300" />
+                    </button>
+                </div>
+                <div className="bg-[#F7DBA7] text-left text-2xl h-fit flex flex-row items-center relative p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                    <h1>Product Details</h1>
+                    <button className="ml-auto">
+                        <SlArrowRight onClick={ handleClickProductDetails } className="text-3xl hover:text-gray-700 transition-colors duration-300" />
                     </button>
                 </div>
             </div>

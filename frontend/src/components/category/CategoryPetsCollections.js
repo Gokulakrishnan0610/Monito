@@ -44,7 +44,7 @@ const CategoryPetsCollections = () => {
                                 <small>Age:  {pro.age} {pro.ageUnit}</small>
                             </div>
                             <div className="price mt-1 text-base font-medium">
-                                ₹ {pro.price}
+                                ₹{pro.price}
                             </div>
                         </div>
                     ))
