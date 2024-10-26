@@ -10,6 +10,7 @@ const Navbar = () => {
     const { logout } = useService()
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [loginStatus, setLoginStatus] = useState(false)
+    const [admin, setadmin] = useState(false);
 
     useEffect(() => {
 
@@ -17,7 +18,12 @@ const Navbar = () => {
         function authathicata(user) {
             if (user) {
                 setLoginStatus(true);
-              
+                if (user.uid === "") {
+                    setadmin(true)
+                }
+                else {
+                    setadmin(false)
+                }
             } else {
                 setLoginStatus(false);
             }
@@ -60,6 +66,11 @@ const Navbar = () => {
                         </li>
                     ))
                 }
+                {admin && (
+                    <li>
+                        <Link to="/admin">Admin</Link>
+                    </li>
+                )}
             </ul>
 
             <div className="search flex  gap-3 items-center ">

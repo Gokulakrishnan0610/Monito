@@ -5,11 +5,14 @@ import { FaTrash } from 'react-icons/fa';
 import './AddPets.css'
 const AddPets = () => {
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const [form, setForm] = useState({
         SKU: '',
         name: '',
         animalType: '',
-        breadType:'',
+        breadType: '',
         price: '',
         image: [],
         gender: '',
@@ -29,6 +32,18 @@ const AddPets = () => {
     const [productIdToEdit, setProductIdToEdit] = useState(null);
 
     useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/products');
+                setProducts(response.data);
+            } catch (error) {
+                setError('Error fetching products');
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProducts();
         console.log(form.image);
     }, [form]);
 
@@ -90,7 +105,7 @@ const AddPets = () => {
             SKU: '',
             name: '',
             animalType: '',
-            breadType:'',
+            breadType: '',
             price: '',
             image: [],
             gender: '',
@@ -119,7 +134,7 @@ const AddPets = () => {
             name: product.name,
             price: product.price,
             animalType: product.animalType,
-            breadType:product.breadType,
+            breadType: product.breadType,
             image: product.image,
             gender: product.gender,
             age: product.age,
