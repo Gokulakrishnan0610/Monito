@@ -9,18 +9,19 @@ const PetsCollections = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true); 
     useEffect(() => {
-        axios.get('http://localhost:5000/products')
+        axios.get('http://localhost:5000/api/animal/getanimals')
             .then((response) => {
-                console.log(response.data) 
-                setProducts(response.data); // set the fetched products
-                setLoading(false); // set loading to false after data is fetched
+                console.log(response.data.allPets);
+                setProducts(response.data.allPets);
+                setLoading(false);
             })
             .catch((error) => {
                 console.log(error);
-                setLoading(false); // stop loading in case of error
+                setLoading(false);
             });
     }, []);
-    return (
+return (
+    
         <div className='collections flex flex-col gap-1 px-[10px] py-[10px] md:px-[60px] md:py-[20px]  '>
             <small className='font-medium px-[10px]  '>Whats new?</small>
             <div className="collections-box1-1 flex justify-between capitalize items-center  px-[10px]  ">
@@ -33,7 +34,10 @@ const PetsCollections = () => {
                 {
                     products.map((data, index) => (
                         <div key={index} className="product  rounded-lg p-3">
-                            <img src={data.image[0]} alt="" className='rounded-lg w-full h-[250px]' />
+                            <img 
+                            src={`data:image/jpeg;base64,${data.images[0]}`}
+                             alt="" className='rounded-lg w-full h-[250px]' />
+                           
                             <h5>{data.name
                             }</h5>
                             <div className="details">

@@ -10,3 +10,15 @@
     scrollbar-width: none;
     /* Firefox */
 }
+.relative {
+    position: relative;
+}
+
+.relative:hover .absolute {
+    display: block; /* Show the delete button on hover */
+}
+
+.absolute {
+    display: none; /* Hide the delete button by default */
+    /* Add any additional styles you want for the button */
+}

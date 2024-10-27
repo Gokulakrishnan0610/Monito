@@ -4,58 +4,27 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const Product = require('./models/Product'); // Product model
 const dbConnection=require("./config/db")
+const path = require('path');
 const app = express();
 const PORT = 5000;
+const productRoutes = require('./route/product.route');
+const addAnimalRoute = require('./route/addAnimal.route');
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve images
 dbConnection()
 
 
 
-// Get all products
-app.get('/products', async (req, res) => {
-    try {
-        const products = await Product.find();
-        res.status(200).json(products);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch products' });
-    }
-});
+app.use('/api/products',productRoutes );
+app.use('/api/animal',addAnimalRoute );
 
-// Add new product
-app.post('/products', async (req, res) => {
-    try {
-        const newProduct = new Product(req.body);
-        const savedProduct = await newProduct.save();
-        res.status(201).json(savedProduct);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to add product' });
-    }
-});
 
-// Update product
-app.put('/products/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
-        res.status(200).json(updatedProduct);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to update product' });
-    }
-});
 
-// Delete product
-app.delete('/products/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        await Product.findByIdAndDelete(id);
-        res.status(200).json({ message: 'Product deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to delete product' });
-    }
-});
+
+
 
 // Start server
 app.listen(PORT, () => {
