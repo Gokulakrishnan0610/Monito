@@ -22,17 +22,17 @@ const Products = () => {
             <small className='capitalize '>hard to choose right product for your pets?</small>
             <div className="box  flex justify-between text-[#003459] items-center capitalize">
                 <h3 className='font-medium'>our products</h3>
-                <button className='border-[#003459] border-[1px] rounded-2xl px-2 py-1 '>
+                <button className='border-[#003459] hidden sm:block  border-[1px] rounded-2xl px-2 py-1 '>
                     view more
                 </button>
             </div>
-            <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2  ">
+            <div className=" grid grid-cols-2 sm:grid-cols-3  md:grid-cols-4 gap-4 mt-2  ">
                 {
                     products.map((pro, index) => (
-                        <div key={index} className="  rounded-lg p-3 product">
+                        <div key={index} className=" flex flex-col gap-1  rounded-lg p-3 product">
                             <img
                                 src={`data:image/jpeg;base64,${pro.images[0]}`}
-                                alt="" className='rounded-lg w-full h-[250px]' />
+                                alt="" className='rounded-lg w-full h-[150px] md:h-[200px]' />
                             <h5 className='font-medium capitalize'>{pro.name.slice(0, 10)}...</h5>
                             <div className="details flex flex-col gap- text-[#6f7d81] capitalize ">
                                 <small >
@@ -46,7 +46,7 @@ const Products = () => {
                             <div className="price font-medium">
                                 ₹{pro.price}
                             </div>
-                            <div className="gift font-medium bg-[#fceed5] px-2 py-1 rounded-sm text-center capitalize flex gap-2 items-center ">
+                            <div className="gift font-medium hidden md:flex bg-[#fceed5] px-2 py-1 rounded-lg text-center capitalize  gap-2 items-center ">
                                 <img src={products.gift} alt="" />
                                 free toy and ree shake
                             </div>

@@ -9,15 +9,15 @@ const PetAbout = () => {
             <small className='font-medium px-[10px]  '>Whats new?</small>
             <div className="collections-box1-1 flex justify-between capitalize items-center  px-[10px]  ">
                 <h3 className='font-medium text-[#003459] '>take a look at some out of pets</h3>
-                <button className='px-3 py-1  border-[2px] hover:bg-[#003459] hover:text-white rounded-2xl  border-[#003459] text-[#003459] '>
-                view more >
+                <button className='px-3 py-1 hidden sm:block   border-[2px] hover:bg-[#003459] hover:text-white rounded-2xl  border-[#003459] text-[#003459] '>
+                view more 
                 </button>
             </div>
             <div className="pets-about grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2   ">
                 {
                     arr.map((pro, index) => (
                         <div key={index} className="product flex flex-col   rounded-lg p-3 text-[12px] gap-1 ">
-                            <img src={aboutPet.pet} alt="" className='rounded-lg' />
+                            <img src={aboutPet.pet} alt="" className='rounded-lg h-[150px] md:h-[200px]' />
                             <button className='px-2  rounded-2xl py-[2px] bg-[#0c8ce9] text-white capitalize  w-fit'>
                                 pet knowledge
                             </button>

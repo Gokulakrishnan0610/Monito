@@ -25,7 +25,7 @@ return (
             <small className='font-medium px-[10px]  '>Whats new?</small>
             <div className="collections-box1-1 flex justify-between capitalize items-center  px-[10px]  ">
                 <h3 className='font-medium text-[#003459] '>take a look at some out of pets</h3>
-                <button className='px-3 py-1  border-[2px] hover:bg-[#003459] hover:text-white rounded-2xl  border-[#003459] text-[#003459] '>
+                <button className='px-3 py-1 hidden sm:block   border-[2px] hover:bg-[#003459] hover:text-white rounded-2xl  border-[#003459] text-[#003459] '>
                     view more
                 </button>
             </div>
@@ -35,25 +35,21 @@ return (
                         <div key={index} className="product  rounded-lg p-3">
                             <img 
                             src={`data:image/jpeg;base64,${data.images[0]}`}
-                             alt="" className='rounded-lg w-full h-[250px]' />
+                             alt="" className='rounded-lg w-full h-[150px] md:h-[200px] ' />
                            
-                            <h5>{data.name
-                            }</h5>
-                            <div className="details">
+                            <h5>{data.name}</h5>
+                            <div className="details flex flex-col ">
                                 <small>
-                                    Genter : {data.genter}
+                                    Genter : {data.gender}
                                 </small>
                                 <small>
-                                    Age : {data.age}{data.ageUnit}
+                                Age :{  ` ${data.age} ${data.ageUnit}`}
                                 </small>
 
                             </div>
-                            <div className="details flex gap-4">
-                                <small>Gene:  {data.gender}</small>
-                                <small>Age:  {data.age} {data.ageUnit}</small>
-                            </div>
+                           
                             <div className="price mt-1 text-base font-medium">
-                                ₹ {data.price}
+                                ₹{data.price}
                             </div>
                         </div>
                     ))
