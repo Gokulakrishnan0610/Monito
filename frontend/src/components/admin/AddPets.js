@@ -498,12 +498,23 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+<<<<<<< HEAD:frontend/src/components/admin/AddAnimals.js
 import "../admin/AddProducts.css";
 import { FaTrash } from 'react-icons/fa';
 import './AddAnimals.css';
 
 const AddAnimals = () => {
     // const [products, setProducts] = useState([]);
+=======
+// import "./AddPetsProducts.css"
+import { FaTrash } from 'react-icons/fa';
+import './AddPets.css'
+const AddPets = () => {
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+>>>>>>> 05a820c3890b8a56e0a4453e7ec66dfd50290307:frontend/src/components/admin/AddPets.js
     const [form, setForm] = useState({
         SKU: '',
         name: '',
@@ -549,6 +560,25 @@ const AddAnimals = () => {
     const [editMode, setEditMode] = useState(false);
     const [productIdToEdit, setProductIdToEdit] = useState(null);
 
+<<<<<<< HEAD:frontend/src/components/admin/AddAnimals.js
+=======
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/products');
+                setProducts(response.data);
+            } catch (error) {
+                setError('Error fetching products');
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProducts();
+        console.log(form.image);
+    }, [form]);
+
+>>>>>>> 05a820c3890b8a56e0a4453e7ec66dfd50290307:frontend/src/components/admin/AddPets.js
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         setForm((prevForm) => ({
@@ -626,6 +656,7 @@ const AddAnimals = () => {
 
     // useEffect(()=>{console.log(form)},[form])
 
+<<<<<<< HEAD:frontend/src/components/admin/AddAnimals.js
     // const handleDelete = (id) => {
     //     axios.delete(`http://localhost:5000/products/${id}`)
     //         .then(() => setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id)))
@@ -655,6 +686,31 @@ const AddAnimals = () => {
     //     setProductIdToEdit(product._id);
     //     setEditMode(true);
     // };
+=======
+    const handleEdit = (product) => {
+        setForm({
+            SKU: product.SKU,
+            name: product.name,
+            price: product.price,
+            animalType: product.animalType,
+            breadType: product.breadType,
+            image: product.image,
+            gender: product.gender,
+            age: product.age,
+            ageUnit: product.age,
+            size: product.ageUnit,
+            color: product.color,
+            vaccinated: product.vaccinated,
+            dewormed: product.dewormed,
+            phoneNumber: product.phoneNumber,
+            location: product.location,
+            publishedDate: product.publishedDate,
+            additionalInfo: product.additionalInfo
+        });
+        setProductIdToEdit(product._id);
+        setEditMode(true);
+    };
+>>>>>>> 05a820c3890b8a56e0a4453e7ec66dfd50290307:frontend/src/components/admin/AddPets.js
 
     const handleDeleteImage = (index) => {
         const updatedImages = form.image.filter((_, i) => i !== index);
@@ -968,7 +1024,7 @@ const AddAnimals = () => {
     );
 };
 
-export default AddAnimals;
+export default AddPets;
 
 
 

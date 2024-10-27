@@ -9,12 +9,13 @@ import Contact from "./Contact"
 import Admin from "./Admin"
 import AdminDetails from './components/admin/AdminDetails';
 import UserDetails from './components/admin/UserDetails'
-import Products from './components/admin/Products';
-import AddProducts from "./components/admin/AddProducts"
+import PetsDetails  from './components/admin/PetsDetails ';
+import AddPetsProducts from "./components/admin/AddPetsProduct"
 import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
 import ResetPass from './components/auth/ResetPass';
-import AddAnimals from './components/admin/AddAnimals';
+import AddPets from './components/admin/AddPets'
+import ProductDetails from './components/admin/ProductDetails'
 
 
 
@@ -32,9 +33,10 @@ root.render(
         <Route path="/admin" element={<Admin />} />
         <Route path="/AdminDetails" element={<AdminDetails />} />
         <Route path="/UserDetails" element={<UserDetails />} />
-        <Route path="/Products" element={<Products />} />
-        <Route path="/AddProducts" element={<AddProducts />} />
-        <Route path="/addanimals" element={<AddAnimals/>} />
+        <Route path="/PetsDetails" element={<PetsDetails/>} />
+        <Route path="/AddPetsProducts" element={<AddPetsProducts />} />
+        <Route path="/AddPets" element={<AddPets/>} />
+        <Route path="/ProductDetails" element={<ProductDetails/>} />
       </Routes>
     </BrowserRouter>
   </Context>
