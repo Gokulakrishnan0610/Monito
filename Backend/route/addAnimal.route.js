@@ -1,9 +1,8 @@
 const express = require('express');
 const multer = require('multer');
-const  {addProduct,getAnimals}= require('../controller/addAnimal.controler');
+const { addProduct, getAnimals, updateAnimal, deleteAnimal } = require('../controller/addAnimal.controler');
 
 const router = express.Router();
-
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -17,7 +16,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Add a new product
-router.post('/add', upload.array('image',10), addProduct);
-router.get('/getanimals',getAnimals);
+router.post('/add', upload.array('image', 10), addProduct);
+router.get('/getanimals', getAnimals);
+router.put('/updateanimal/:id', upload.array('image', 10), updateAnimal);  // Make sure to include multer for uploads
+router.delete('/deleteanimal/:id', deleteAnimal);
 
 module.exports = router;

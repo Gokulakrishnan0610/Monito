@@ -10,7 +10,7 @@ const Navbar = () => {
     const { logout } = useService()
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [loginStatus, setLoginStatus] = useState(false)
-    const [admin, setadmin] = useState(false);
+    const [admin, setadmin] = useState(true);
 
     useEffect(() => {
 
@@ -18,12 +18,12 @@ const Navbar = () => {
         function authathicata(user) {
             if (user) {
                 setLoginStatus(true);
-                if (user.uid === "") {
-                    setadmin(true)
-                }
-                else {
-                    setadmin(false)
-                }
+                // if (user.uid === "") {
+                //     setadmin(true)
+                // }
+                // else {
+                //     setadmin(false)
+                // }
             } else {
                 setLoginStatus(false);
             }
