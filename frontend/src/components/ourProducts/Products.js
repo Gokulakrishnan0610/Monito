@@ -39,7 +39,7 @@ const Products = () => {
                                     Seller: {pro.seller}
                                 </small>
                                 <small>
-                                    size : {pro.quantity}gm
+                                    Quantity : {pro.quantity}gm
                                 </small>
 
                             </div>

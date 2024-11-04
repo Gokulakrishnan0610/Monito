@@ -1,4 +1,5 @@
 const animalModel = require('../models/addAnimal.model');
+const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 
@@ -42,6 +43,45 @@ const getAnimals = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+const getAnimalById = async (req, res) => {
+    const { id } = req.params; // Extracting the id from the request parameters
+    try {
+        // Convert string ID to ObjectId if valid
+        const objectId = mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : null; // Use 'new'
+
+        if (!objectId) {
+            return res.status(400).json({ success: false, message: 'Invalid ID format' });
+        }
+
+        // Find the animal by id in the database
+        const pet = await animalModel.findById(objectId);
+        if (!pet) {
+            return res.status(404).json({ success: false, message: 'Animal not found' });
+        }
+
+        // Process images if they exist
+        const images = await Promise.all(
+            pet.images.map(async (imgPath) => {
+                const imagePath = path.join(__dirname, '..', imgPath);
+                try {
+                    const data = await fs.promises.readFile(imagePath);
+                    return data.toString('base64');
+                } catch (error) {
+                    console.error('Error reading image file:', error);
+                    return null;
+                }
+            })
+        );
+
+        // Send response with the specific pet details
+        res.status(200).json({ success: true, pet: { ...pet._doc, images: images.filter((img) => img !== null) } });
+    } catch (error) {
+        console.error('Error getting animal by ID:', error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 
 // Update a pet product
 const updateAnimal = async (req, res) => {
@@ -92,5 +132,5 @@ const deleteAnimal = async (req, res) => {
     }
 };
 
-module.exports = { addProduct, getAnimals, updateAnimal, deleteAnimal };
+module.exports = { addProduct, getAnimals, updateAnimal, deleteAnimal, getAnimalById };
 

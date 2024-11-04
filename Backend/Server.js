@@ -8,6 +8,8 @@ const app = express();
 const PORT = 5000;
 const productRoutes = require('./route/product.route');
 const addAnimalRoute = require('./route/addAnimal.route');
+const infoRoute = require("./route/info.route")
+const nodemailer = require('nodemailer');
 
 // Middleware
 app.use(express.json());
@@ -20,6 +22,37 @@ dbConnection();
 // API Routes
 app.use('/api/products', productRoutes);
 app.use('/api/animal', addAnimalRoute);
+app.use('/api/route', infoRoute)
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: "21ucsa09@gmail.com",
+        pass: "uxvy ddjj nzvu brsk",
+    },
+});
+
+app.post('/send-email', (req, res) => {
+    const { name, email, message } = req.body;
+
+    const mailOptions = {
+        from: email,
+        to: '21ucsa09@gmail.com',
+        subject: `New message from ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error('Error sending email:', error);
+            res.status(500).json({ message: 'Failed to send email' });
+        } else {
+            console.log('Email sent:', info.response);
+            res.status(200).json({ message: 'Email sent successfully' });
+        }
+    });
+});
+
 
 // Start server
 app.listen(PORT, () => {

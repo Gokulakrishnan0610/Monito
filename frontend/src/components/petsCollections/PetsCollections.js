@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import './PetsCollections.css'
-import aboutPet from '../../data/petsCollections'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 const PetsCollections = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     useEffect(() => {
         axios.get('http://localhost:5000/api/animal/getanimals')
             .then((response) => {
@@ -19,8 +20,8 @@ const PetsCollections = () => {
                 setLoading(false);
             });
     }, []);
-return (
-    
+    return (
+
         <div className='collections flex flex-col gap-1 px-[10px] py-[10px] md:px-[60px] md:py-[20px]  '>
             <small className='font-medium px-[10px]  '>Whats new?</small>
             <div className="collections-box1-1 flex justify-between capitalize items-center  px-[10px]  ">
@@ -32,22 +33,23 @@ return (
             <div className="pets-collections grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2  ">
                 {
                     products.map((data, index) => (
-                        <div key={index} className="product  rounded-lg p-3">
-                            <img 
-                            src={`data:image/jpeg;base64,${data.images[0]}`}
-                             alt="" className='rounded-lg w-full h-[150px] md:h-[200px] ' />
-                           
+                        <div key={data._id} className="product  rounded-lg p-3"
+                            onClick={() => navigate(`/Details/${data._id}`)}>
+                            <img
+                                src={`data:image/jpeg;base64,${data.images[0]}`}
+                                alt="" className='rounded-lg w-full h-[150px] md:h-[200px] ' />
+
                             <h5>{data.name}</h5>
                             <div className="details flex flex-col ">
                                 <small>
                                     Genter : {data.gender}
                                 </small>
                                 <small>
-                                Age :{  ` ${data.age} ${data.ageUnit}`}
+                                    Age :{` ${data.age} ${data.ageUnit}`}
                                 </small>
 
                             </div>
-                           
+
                             <div className="price mt-1 text-base font-medium">
                                 ₹{data.price}
                             </div>

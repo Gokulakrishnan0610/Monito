@@ -5,145 +5,166 @@ import "./AddPetsProduct.css";
 const AddPetsProduct = () => {
     const [products, setProducts] = useState([]);
     const [form, setForm] = useState({
-        brand: '',
-        productName: '',
+        seller: '',
+        name: '',
         price: '',
-        size: '',
-        category: '',
-        image: []
+        stock: '',
+        description: '',
+        quantity: '',
+        images: []
     });
-
     const [editMode, setEditMode] = useState(false);
     const [productIdToEdit, setProductIdToEdit] = useState(null);
+    const [error, setError] = useState('');
 
     // Fetch pet products on component load
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/PetsProduct');
-                setProducts(response.data);
+                const response = await axios.get('http://localhost:5000/api/products/getproduct');
+                setProducts(response.data.allPets);
             } catch (error) {
                 console.error('Error fetching products:', error);
+                setError('Failed to fetch products.');
             }
         };
-
         fetchProducts();
-    }, []);
+    }, [form]);
 
     const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setForm((prevForm) => ({
             ...prevForm,
-            [name]: type === 'checkbox' ? checked : value,
+            [name]: value,
         }));
     };
 
     const handleFileChange = (e) => {
-        const files = e.target.files;
-        Array.from(files).forEach((file) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setForm((prevForm) => ({
-                    ...prevForm,
-                    image: [...prevForm.image, reader.result],
-                }));
-            };
-            reader.readAsDataURL(file);
-        });
+        const newFiles = Array.from(e.target.files);
+        setForm((prevForm) => ({
+            ...prevForm,
+            images: [...(prevForm.images || []), ...newFiles]
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const productData = { ...form };
+        const productData = new FormData();
+
+        // Append data to FormData
+        for (const key in form) {
+            if (Array.isArray(form[key])) {
+                form[key].forEach((file) => productData.append(key, file));
+            } else {
+                productData.append(key, form[key]);
+            }
+        }
+
+        console.log('FormData contents:');
+        productData.forEach((value, key) => {
+            console.log(`${key}:`, value);
+        });
 
         try {
             if (editMode) {
-                const response = await axios.put(`http://localhost:5000/PetsProduct/${productIdToEdit}`, productData);
+                console.log("Editing product ID:", productIdToEdit);
+                const response = await axios.put(`http://localhost:5000/api/products/updateproduct/${productIdToEdit}`, productData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
                 setProducts((prevProducts) =>
                     prevProducts.map((product) =>
                         product._id === productIdToEdit ? response.data : product
                     )
                 );
-                setEditMode(false);
-                setProductIdToEdit(null);
+                resetForm();
             } else {
-                const response = await axios.post('http://localhost:5000/PetsProduct', productData, {
-                    headers: { 'Content-Type': 'application/json' }
+                const response = await axios.post('http://localhost:5000/api/products/postproduct', productData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
                 });
                 setProducts((prevProducts) => [...prevProducts, response.data]);
+                resetForm();
             }
-            resetForm();
         } catch (error) {
             console.error('Error adding/updating product:', error);
+            setError('Error adding/updating product. Please try again.');
         }
     };
 
     const resetForm = () => {
         setForm({
-            brand: '',
-            productName: '',
+            seller: '',
+            name: '',
             price: '',
-            size: '',
-            category: '',
-            image: []
+            stock: '',
+            description: '',
+            quantity: '',
+            images: []
         });
     };
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/PetsProduct/${id}`);
+            await axios.delete(`http://localhost:5000/api/products/deleteproduct/${id}`);
             setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id));
         } catch (error) {
             console.error('Error deleting product:', error);
+            setError('Error deleting product. Please try again.');
         }
     };
 
     const handleEdit = (product) => {
         setForm({
-            brand: product.brand,
-            productName: product.productName,
+            seller: product.seller,
+            name: product.name,
             price: product.price,
-            size: product.size,
-            category: product.category,
-            image: product.image
+            stock: product.stock,
+            description: product.description,
+            quantity: product.quantity,
+            images: product.images
         });
         setProductIdToEdit(product._id);
         setEditMode(true);
+        console.log(form)
+    };
+
+    const handleImageRemove = (index) => {
+        setForm((prevForm) => {
+            const updatedImages = prevForm.images.filter((_, i) => i !== index);
+            return { ...prevForm, images: updatedImages };
+        });
     };
 
     return (
         <div className="overflow-scroll min-h-screen w-screen py-6 bg-gray-100 scroll-container">
-            <form onSubmit={handleSubmit} className="m-auto w-[90%] md:max-w-[50%] overflow-auto bg-white rounded-lg shadow-md p-6">
+            <form onSubmit={handleSubmit} encType="multipart/form-data" className="m-auto w-[90%] md:max-w-[50%] overflow-auto bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-xl font-bold mb-4">{editMode ? 'Update Pet Product' : 'Add Pet Product'}</h2>
 
                 <div className="mb-4">
-                    <label htmlFor="brand" className="block mb-2">Brand</label>
+                    <label htmlFor="seller" className="block mb-2">Seller</label>
                     <input
                         type="text"
-                        name="brand"
-                        placeholder="Brand"
-                        value={form.brand}
+                        name="seller"
+                        placeholder="Seller"
+                        value={form.seller}
                         onChange={handleInputChange}
                         required
                         className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
 
-                {/* Product Name Input */}
                 <div className="mb-4">
-                    <label htmlFor="productName" className="block mb-2">Product Name</label>
+                    <label htmlFor="name" className="block mb-2">Name</label>
                     <input
                         type="text"
-                        name="productName"
-                        placeholder="Product Name"
-                        value={form.productName}
+                        name="name"
+                        placeholder="Name"
+                        value={form.name}
                         onChange={handleInputChange}
                         required
                         className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
 
-                {/* Price Input */}
                 <div className="mb-4">
                     <label htmlFor="price" className="block mb-2">Price</label>
                     <input
@@ -157,38 +178,42 @@ const AddPetsProduct = () => {
                     />
                 </div>
 
-                {/* Size Input */}
                 <div className="mb-4">
-                    <label htmlFor="size" className="block mb-2">Size</label>
+                    <label htmlFor="stock" className="block mb-2">Stock</label>
                     <input
-                        type="text"
-                        name="size"
-                        placeholder="Size"
-                        value={form.size}
+                        type="number"
+                        name="stock"
+                        placeholder="Stock"
+                        value={form.stock}
                         onChange={handleInputChange}
                         required
                         className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
 
-                {/* Product Category Input */}
                 <div className="mb-4">
-                    <label htmlFor="category" className="block mb-2">Product Category</label>
-                    <select
-                        name="category"
-                        value={form.category}
+                    <label htmlFor="quantity" className="block mb-2">Quantity</label>
+                    <input
+                        type="text"
+                        name="quantity"
+                        placeholder="Quantity"
+                        value={form.quantity}
                         onChange={handleInputChange}
-                        required
                         className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                        <option value="">Select Category</option>
-                        <option value="Dog Food">Dog Food</option>
-                        <option value="Cat Food">Cat Food</option>
-                        <option value="costume">Costume</option>
-                    </select>
+                    />
                 </div>
 
-                {/* Image Upload */}
+                <div className="mb-4">
+                    <label htmlFor="description" className="block mb-2">Description</label>
+                    <textarea
+                        name="description"
+                        placeholder="Description"
+                        value={form.description}
+                        onChange={handleInputChange}
+                        className="border border-gray-300 p-3 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
                 <div className="mb-4">
                     <label className="text-gray-700 font-medium">Images</label>
                     <div className="flex mt-2 items-center border border-gray-300 rounded-md overflow-hidden">
@@ -205,44 +230,52 @@ const AddPetsProduct = () => {
                             className="hidden"
                         />
                     </div>
-                    <div className="flex w-full items-center gap-2">
-                        {form.image.map((img, index) => (
-                            <div key={index} className="mt-3">
-                                <img src={img} alt={`Image Preview ${index + 1}`} className="w-20 h-20 object-cover rounded-md" />
+                    <div className="flex w-full items-center gap-2 mt-3">
+                        {Array.isArray(form.images) && form.images.map((img, index) => (
+                            <div key={index} className="relative">
+                                <img
+                                    src={img instanceof File ? URL.createObjectURL(img) : ''}
+                                    alt={`Image Preview ${index + 1}`}
+                                    className="w-20 h-20 object-cover rounded-md"
+                                />
+                                <button
+                                    onClick={() => handleImageRemove(index)}
+                                    className="absolute top-1 right-1 bg-red-500 text-white text-xs w-4 h-4 flex justify-center items-center rounded-full"
+                                >
+                                    X
+                                </button>
                             </div>
                         ))}
                     </div>
                 </div>
 
 
-                {/* Submit Button */}
                 <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
                     {editMode ? 'Update Pet Product' : 'Add Pet Product'}
                 </button>
             </form>
 
-            {/* Product List */}
             <h2 className="text-xl font-bold mt-6">Pet Product List</h2>
             <ul className="mt-4">
                 {products.map((product) => (
-                    <li key={product._id} className="flex justify-between items-center mb-2 p-4 border-b">
+                    <li key={product._id} className="flex justify-between items-center p-4 bg-gray-100 rounded mb-2">
                         <div>
-                            <h3 className="font-semibold">{product.brand}</h3>
-                            <p>Product: {product.productName}</p>
-                            <p>Price: ₹{product.price}</p>
-                            <p>Size: {product.size}</p>
-                            <p>Category: {product.category}</p>
+                            <h3 className="text-lg font-semibold">{product.name}</h3>
+                            <p>Seller: {product.seller}</p>
+                            <p>Price: ${product.price}</p>
+                            <p>Stock: {product.stock}</p>
+                            <p>Quantity: {product.quantity}</p>
                         </div>
                         <div>
                             <button
                                 onClick={() => handleEdit(product)}
-                                className="bg-yellow-500 text-white py-1 px-2 rounded mr-2"
+                                className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
                             >
                                 Edit
                             </button>
                             <button
                                 onClick={() => handleDelete(product._id)}
-                                className="bg-red-500 text-white py-1 px-2 rounded"
+                                className="bg-red-500 text-white px-2 py-1 rounded"
                             >
                                 Delete
                             </button>
@@ -255,4 +288,5 @@ const AddPetsProduct = () => {
 };
 
 export default AddPetsProduct;
+
 
