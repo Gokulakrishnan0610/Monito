@@ -19,6 +19,10 @@ import ProductDetails from './components/admin/ProductDetails'
 import PetsInfo from './components/admin/PetsInfo';
 import PetsInfoDetails from './components/admin/PetsInfoDetails';
 import Details from './components/details/Details'
+import Search from './components/search/Search';
+import OurProducts from './components/ourProducts/OurProducts';
+import PetAbout from './components/petKnoledge/PetAbout';
+import AnimalDetails from './components/petKnoledge/AnimalDetails';
 
 
 
@@ -28,6 +32,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="*" element={<App />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/resetpassword" element={<ResetPass />} />
@@ -43,6 +48,10 @@ root.render(
         <Route path="/PetsInfo" element={<PetsInfo />} />
         <Route path="/PetsInfoDetails" element={<PetsInfoDetails />} />
         <Route path="/Details/:id" element={<Details />} />
+        <Route path="/search/:input" element={<Search />} />
+        <Route path="/more" element={<Search />} />
+        <Route path="/OurProducts" element={<OurProducts />} />
+        <Route path="/AnimalDetail" element={<AnimalDetails />} />
       </Routes>
     </BrowserRouter>
   </Context>

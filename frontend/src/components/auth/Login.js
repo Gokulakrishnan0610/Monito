@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-import { useService } from '../../service/ServiceProvider';
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import auth from '../../firebase/firebase';
 import './Login.css'
@@ -25,13 +24,11 @@ const Login = () => {
             if (user) {
                 navigate("/")
 
-            } else {
-
-            }
+            } 
 
         }
         onAuthStateChanged(auth, authathicata)
-    }, [])
+    }, [navigate])
 
    
   

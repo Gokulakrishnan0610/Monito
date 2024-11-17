@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-
+require('dotenv').config()
 
 // MongoDB connection (replace with your MongoDB Atlas connection string)
 const connectDb = () => {
-    mongoose.connect('mongodb+srv://pasupathi07777:MRpubg8903@pasupathi-db.g5eoa.mongodb.net/monito?retryWrites=true&w=majority&appName=pasupathi-DB')
+    mongoose.connect(process.env.MONGO_DB_URL)
         .then(() => {
             console.log('MongoDB connected');
         })

@@ -231,10 +231,10 @@ const AddPetsProduct = () => {
                         />
                     </div>
                     <div className="flex w-full items-center gap-2 mt-3">
-                        {Array.isArray(form.images) && form.images.map((img, index) => (
+                        {Array.isArray(form.images) && form.images.map((pro, index) => (
                             <div key={index} className="relative">
                                 <img
-                                    src={img instanceof File ? URL.createObjectURL(img) : ''}
+                                    src={pro instanceof File ? URL.createObjectURL(pro) : ''}
                                     alt={`Image Preview ${index + 1}`}
                                     className="w-20 h-20 object-cover rounded-md"
                                 />
@@ -255,7 +255,8 @@ const AddPetsProduct = () => {
                 </button>
             </form>
 
-            <h2 className="text-xl font-bold mt-6">Pet Product List</h2>
+          <div className='px-5'>
+          <h2 className="text-xl font-bold mt-6">Pet Product List</h2>
             <ul className="mt-4">
                 {products.map((product) => (
                     <li key={product._id} className="flex justify-between items-center p-4 bg-gray-100 rounded mb-2">
@@ -266,7 +267,7 @@ const AddPetsProduct = () => {
                             <p>Stock: {product.stock}</p>
                             <p>Quantity: {product.quantity}</p>
                         </div>
-                        <div>
+                        <div className='flex '>
                             <button
                                 onClick={() => handleEdit(product)}
                                 className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
@@ -283,6 +284,7 @@ const AddPetsProduct = () => {
                     </li>
                 ))}
             </ul>
+          </div>
         </div>
     );
 };

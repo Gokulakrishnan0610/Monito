@@ -7,8 +7,23 @@ import FriendBanner from "./components/banner/FriendBanner";
 import AdaptBanner from "./components/banner/AdaptBanner";
 import PetAbout from "./components/petKnoledge/PetAbout";
 import Footer from "./components/footer/Footer";
+import { useEffect } from "react";
+import auth from "./firebase/firebase";
+import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
 
 function App() {
+  const navigate=useNavigate()
+
+  useEffect(()=>{
+    function authathicata(user) {
+      if (!user) {
+          navigate("/login")
+        } 
+      }
+  onAuthStateChanged(auth, authathicata)
+
+  },[])
 
   return (
       <div className="App overflow-y-scroll   ">

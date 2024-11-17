@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { signOut } from "firebase/auth";
 import auth from "../firebase/firebase";
 const ContextProvider = createContext()
@@ -7,7 +7,7 @@ export const Context = ({ children }) => {
     
    
   
-
+   
    
     function logout(){
         signOut(auth).then(() => {
@@ -21,7 +21,7 @@ export const Context = ({ children }) => {
     return (
         <ContextProvider.Provider value={{
           
-             logout,
+             logout
          
             
 

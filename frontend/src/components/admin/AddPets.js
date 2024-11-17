@@ -449,7 +449,7 @@ const AddPets = () => {
                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
             </form>
 
-            <div>
+            <div className='px-5'>
                 <h2 className="text-xl font-bold mt-6">Product List</h2>
                 <ul className="mt-4">
                     {products.map((product) => (

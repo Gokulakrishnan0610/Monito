@@ -172,10 +172,10 @@ const PetsInfo = () => {
                         />
                     </div>
                     <div className="flex w-full items-center gap-2 mt-3">
-                        {form.images.map((img, index) => (
+                        {form.images.map((pro, index) => (
                             <div key={index} className="relative">
                                 <img
-                                    src={URL.createObjectURL(img)}
+                                    src={URL.createObjectURL(pro)}
                                     alt={`Image Preview ${index + 1}`}
                                     className="w-20 h-20 object-cover rounded-md"
                                 />
@@ -194,7 +194,7 @@ const PetsInfo = () => {
                 {/* Submit Button */}
                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
             </form>
-            <div>
+            <div className='px-5'>
                 <h2 className="text-xl font-bold mt-6">Pets Info List</h2>
                 <ul className="mt-4">
                     {products && products.length > 0 ? (
@@ -204,7 +204,7 @@ const PetsInfo = () => {
                                     <h3 className="font-semibold">{product.question}</h3>
                                     <p>{product.answer}</p>
                                 </div>
-                                <div>
+                                <div className='flex'>
                                     <button
                                         onClick={() => handleEdit(product)}
                                         className="bg-yellow-500 text-white py-1 px-2 rounded mr-2"
